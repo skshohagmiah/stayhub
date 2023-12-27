@@ -2,11 +2,17 @@ import Categories from '@/components/Categories'
 import Listing from '@/components/Listing'
 import Image from 'next/image'
 
-export default function Home() {
+
+interface HomeProps {
+  searchParams:{search:string,guests:string, startDate:string, endDate:string}
+}
+
+
+export default function Home({searchParams}:HomeProps) {
   return (
     <div className='relative mx-auto max-w-7xl'>
     <Categories />
-    <Listing />
+    <Listing searchParams={searchParams}/>
     </div>
   )
 }

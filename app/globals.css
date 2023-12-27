@@ -21,6 +21,11 @@ body,
   overflow-x: scroll;
 } 
 
+.overflow-scroll::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+  overflow-x: scroll;
+} 
 /* Hide scrollbar for IE, Edge and Firefox */
 .categories {
   -ms-overflow-style: none; 
