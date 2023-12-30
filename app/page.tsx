@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 
 interface HomeProps {
-  searchParams:{search:string,guests:string, startDate:string, endDate:string}
+  searchParams:{search:string,guests:string, startDate:string, endDate:string,category?:string}
 }
 
 

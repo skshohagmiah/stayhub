@@ -6,11 +6,14 @@ import useListModal from "@/hooks/useListModal";
 import getCategoryData from "@/libs/getCategoryData";
 import ImageUpload from "./ImageUpload";
 import Image from "next/image";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ListingModal = () => {
   const { isOpen, onClose } = useListModal();
   const categories = getCategoryData();
   const [step, setStep] = useState(1);
+  const router = useRouter()
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -19,6 +22,7 @@ const ListingModal = () => {
   const [longitude, setLongitude] = useState("");
   const [price, setPrice] = useState("0");
   const [placeType, setPlaceType] = useState("");
+  const [guests, setGuests] = useState('1')
   const [amenities, setAmenities] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState("");
 
@@ -64,19 +68,25 @@ const ListingModal = () => {
     setImageUrl(res);
   }
 
-  const handleSubmit = () => {
-    console.log(
-      name,
-      description,
-      address,
-      amenities,
-      price,
-      longitude,
-      latitude,
-      placeType,
-      address,
-      imageUrl
-    );
+  const handleSubmit = async() => {
+    try {
+      const res = await axios.post('/api/listing', {name,description,placeType,price,address,amenities,imageUrl,guests,latitude,longitude})
+      if(res.status === 200){
+        onClose()
+        router.push('/')
+        router.refresh()
+        setAddress('')
+        setName('')
+        setDescription('')
+        setImageUrl('')
+        setPrice('')
+        setStep(1)
+
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   if (isOpen) {
@@ -86,15 +96,11 @@ const ListingModal = () => {
           <div className="fixed inset-0 h-full w-full flex items-center justify-center z-50  bg-white/50">
             <div className=" md:w-2/4 h-auto bg-white shadow-lg rounded-xl m-2 overflow-scroll p-3 sm:p-8">
               <div className="flex items-center justify-between  py-4">
-                <p className="text-xl font-light capitalize">Welcome To <span className="text-rose-500 font-medium">StayHub Host</span></p>
+                <p className="text-xl font-medium capitalize">Give us Some Information about your place</p>
                 <div onClick={onClose}>
                   <RxCross1 className="hover:opacity-40" />
                 </div>
               </div>
-
-              <h2 className="font-medium text-center text-xl capitalize mb-4">
-                Give us Some Information about your place
-              </h2>
 
               <div className="flex flex-col  gap-2 items-start mt-2">
                 <label className="text-xs font-medium" htmlFor="name">
@@ -122,6 +128,22 @@ const ListingModal = () => {
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </div>
+
+              
+              <div className="flex flex-col  gap-2 items-start mt-4">
+                <label className="text-xs font-medium" htmlFor="name">
+                  Number Of Guests Capacity :
+                </label>
+                <input
+                  className="p-2 w-full rounded-md border-2 outline-none"
+                  placeholder="Place Description"
+                  id="name"
+                  type="number"
+                  value={guests}
+                  onChange={(e) => setGuests(e.target.value)}
                   required
                 />
               </div>

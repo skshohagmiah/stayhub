@@ -5,25 +5,34 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRangePicker, RangeKeyDict } from "react-date-range";
 import useSearchModal from "@/hooks/useSearchModal";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SearchModal = () => {
-  const {isOpen,onClose} = useSearchModal()
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
-  const [search, setSearch] = useState('')
-  const [guests, setGuests] = useState('')
+  const { isOpen, onClose } = useSearchModal();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [search, setSearch] = useState("");
+  const [guests, setGuests] = useState("1");
   const [mounted, setMounted] = useState(false);
-
 
   const pathname = usePathname();
   const router = useRouter();
+  const params = useSearchParams();
 
   const handleSearch = () => {
-    console.log(startDate,endDate,search,guests)
-
-    router.push(`${pathname}?search=${search}&guests=${guests}&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`)
-  }
+    if (params.get("category")) {
+      const category = params.get("category");
+      router.push(
+        `${pathname}?search=${search}&guests=${guests}&category=${category}&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
+      );
+    } else {
+      router.push(
+        `${pathname}?search=${search}&guests=${guests}&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
+      );
+    }
+    onClose()
+    setSearch('')
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -36,8 +45,8 @@ const SearchModal = () => {
   };
 
   const handleSelect = (ranges: RangeKeyDict) => {
-    setStartDate(ranges.selection.startDate!)
-    setEndDate(ranges.selection.endDate!)
+    setStartDate(ranges.selection.startDate!);
+    setEndDate(ranges.selection.endDate!);
     console.log(ranges);
   };
 
@@ -54,7 +63,7 @@ const SearchModal = () => {
               find your place
             </p>
             <div onClick={onClose}>
-            <RxCross1 className='hover:opacity-40'/>
+              <RxCross1 className="hover:opacity-40" />
             </div>
           </div>
           <div className="flex items-center gap-2 p-2">
@@ -77,15 +86,23 @@ const SearchModal = () => {
           </div>
           <div className="overflow-scroll m-2">
             <DateRangePicker
-            className="w-full text-center text-xs"
+              className="w-full text-center text-xs"
               ranges={[selectionRange]}
               onChange={handleSelect}
             />
           </div>
-        <div className="flex items-center justify-between p-2">
-          <p className="md:text-lg font-medium">Number Of Guests</p>
-          <input className="bg-gray-200 p-2 w-20 outline-none rounded-md" type="number" name="number" id="number" min={1} value={guests} onChange={(e) => setGuests(e.target.value)} />
-        </div>
+          <div className="flex items-center justify-between p-2">
+            <p className="md:text-lg font-medium">Number Of Guests</p>
+            <input
+              className="bg-gray-200 p-2 w-20 outline-none rounded-md"
+              type="number"
+              name="number"
+              id="number"
+              min={1}
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+            />
+          </div>
         </div>
       </div>
     );

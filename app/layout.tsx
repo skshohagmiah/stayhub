@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SearchModal from '@/components/SearchModal'
 import ListingModal from '@/components/LIstingModal'
+import SignInModal from '@/components/SignInModal'
 
 const poppins = Poppins({ subsets: ['latin'],weight:['300', '400','500','600','700'] })
 
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} bg-white/90`}>
+        <SignInModal />
         <SearchModal />
         <ListingModal />
         <Header />
