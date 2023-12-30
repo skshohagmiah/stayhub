@@ -32,7 +32,7 @@ const Menu = ({ session }: MenuProps) => {
   }, []);
 
   return (
-    <div className="flex w-fit shrink-0 lg:flex-1 justify-end gap-4">
+    <div className="flex w-fit  lg:flex-1 justify-end gap-4">
       <BecomeHost />
       <div
         className="relative"
