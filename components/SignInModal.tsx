@@ -25,7 +25,7 @@ const SignInModal = () => {
           <div className="flex flex-col gap-4 p-4">
             <div
               onClick={() => signIn("google", { redirect: false })}
-              className="flex gap-4 py-2 px-12 items-center justify-center text-lg  rounded-md bg-rose-600 hover:opacity-40  text-white duration-150 transition"
+              className="flex gap-4 py-2 px-4 items-center justify-center text-lg  rounded-md bg-rose-600 hover:opacity-40  text-white duration-150 transition"
             >
               <FaGoogle className="w-8 h-8" />
               <h3 className="text-xl ">Sign In With Google</h3>

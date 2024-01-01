@@ -93,7 +93,7 @@ const ReservationPage = ({ user, list, session }: ReservationProps) => {
       <div className="p-4 flex items-center justify-between">
         <label htmlFor="guests">Number Of Guests</label>
         <input
-          className="bg-gray-300 p-2 rounded-md outline-none"
+          className="bg-gray-300 p-2 w-24 rounded-md outline-none"
           type="number"
           min={1}
           id="guests"
