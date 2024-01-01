@@ -33,7 +33,7 @@ const Menu = ({ session }: MenuProps) => {
 
   return (
     <div className="flex w-fit  lg:flex-1 justify-end gap-4">
-      <BecomeHost />
+      <BecomeHost session={session} />
       <div
         className="relative"
         ref={containerRef}
@@ -60,26 +60,38 @@ const Menu = ({ session }: MenuProps) => {
               </div>
             )}
             <Link
-              className="text-md font-medium hover:bg-gray-200 transition-all p-2 rounded-md"
+              className="md:hidden text-md font-medium hover:bg-gray-200 transition-all p-2 rounded-md"
               href={"/"}
+            >
+              Home
+            </Link>
+            <Link
+              className="text-md font-medium hover:bg-gray-200 transition-all p-2 rounded-md"
+              href={"/trips"}
             >
               Trips
             </Link>
             <Link
               className="text-md font-medium hover:bg-gray-200 transition-all p-2 rounded-md"
-              href={"/"}
+              href={"/wishlist"}
             >
               Wishlist
             </Link>
             <Link
               className="text-md font-medium  hover:bg-gray-200 transition-all p-2 rounded-md"
-              href={"/"}
+              href={"/listing"}
             >
               Listings
             </Link>
             <div className="border-b-2" />
             <div
-              onClick={onOpen}
+              onClick={() => {
+                if (!session) {
+                  signInOpen();
+                } else {
+                  onOpen();
+                }
+              }}
               className="text-md font-medium  hover:bg-gray-200 transition-all p-2 rounded-md"
             >
               Become a Host
@@ -90,7 +102,7 @@ const Menu = ({ session }: MenuProps) => {
             </button>
             {session?.user && (
               <button
-                onClick={() => signOut()}
+                onClick={() => signOut({callbackUrl:'/'})}
                 className="text-left hover:bg-gray-200 transition-all p-2 rounded-md"
               >
                 Logout

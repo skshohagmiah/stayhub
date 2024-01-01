@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth/next"
 import { prisma } from "./db"
 import { authOptions } from "@/app/api/auth/authOption"
 
+export const dynamic = true;
 
 export const getCurrentSession = async () => {
     try {
@@ -21,7 +22,7 @@ export const getCurrentUser = async () => {
                 email: session?.user?.email
             }
         })
-        return currentUser
+        return currentUser;
     } catch (error) {
         console.log(error)
     }

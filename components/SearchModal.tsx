@@ -30,8 +30,8 @@ const SearchModal = () => {
         `${pathname}?search=${search}&guests=${guests}&startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`
       );
     }
-    onClose()
-    setSearch('')
+    onClose();
+    setSearch("");
   };
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const SearchModal = () => {
         <div className=" max-w-full bg-white shadow-lg rounded-xl m-2 overflow-scroll sm:p-4">
           <div className="flex items-center justify-between px-4 py-2">
             <p className="text-xl text-rose-500 font-medium capitalize">
-              find your place
+              find place
             </p>
             <div onClick={onClose}>
               <RxCross1 className="hover:opacity-40" />
